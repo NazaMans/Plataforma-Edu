@@ -16,13 +16,29 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
     try {
-        const resultado = await authService.loginUsuario(req.body);
+        const {usuario, token} = await authService.loginUsuario(req.body);
+
+        //guardar token en una cookie
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production" || true,
+            maxAge: 8 * 60 * 60 * 1000,
+            sameSite: "strict"
+        });
+
+
         res.json({
             success: true,
             message: "Logeado exitosamente",
-            ...resultado
+            usuario
         });
     } catch (error) {
         next(error);
     }
+};
+
+//TODO:Implementar logout
+export const logout = async (req, res) => {
+    res.clearCookie("authToken");
+    res.json({succes: true, message: "Sesion cerrada exitosamente"});
 };

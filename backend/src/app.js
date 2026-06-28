@@ -1,11 +1,19 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import appRoutes from "./routes.js";
 import { passportConfig } from "./config/passport.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: [process.env.FRONTEND_URL] || ["http://localhost:5173"],
+    credentials: true
+}));
+
+//Se setea cookieparser para poder manejar las cookies
+app.use(cookieParser());
+
 app.use(express.json());
 passportConfig();
 
