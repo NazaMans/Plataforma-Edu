@@ -21,4 +21,3 @@ export const testConection = async () => {
 };
 
 export default pool;
-

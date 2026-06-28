@@ -1,16 +1,20 @@
 import express from "express";
 import cors from "cors";
+import appRoutes from "./routes.js";
+import { passportConfig } from "./config/passport.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
-
 app.use(cors());
 app.use(express.json());
+passportConfig();
+
+app.use("/api", appRoutes);
 
 app.get("/", (req, res) => {
-    res.json({message: "Hola mundo"});
+    res.json({message: "Servidor funcionando"});
 });
 
-
-
+app.use(errorHandler);
 export default app;
 
