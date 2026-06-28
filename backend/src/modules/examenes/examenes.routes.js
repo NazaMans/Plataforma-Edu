@@ -1,30 +1,30 @@
-import {Router} from "express"
+import { Router } from "express";
 import * as examenesController from "./examenes.controller.js";
-import { validarId } from "./examenes.validator.js";
+import { validarIdExamen, validarIdCursoParam, validarCrearExamen, validarEditarExamen } from "./examenes.validator.js";
 import { verificarAutenticacion } from "../../middlewares/auth.middleware.js";
 import { verificarRoles } from "../../middlewares/rol.middleware.js";
 
 const router = Router();
 
 //Crear examen
-router.post("/crear", verificarAutenticacion, verificarRoles(["Admin"]), examenesController.crearExamenController);
+router.post("/crear", verificarAutenticacion, verificarRoles(["Admin"]), validarCrearExamen, examenesController.crearExamenController);
 
 // Get examen para admin
 router.get("/admin", verificarAutenticacion, verificarRoles(["Admin"]), examenesController.getExamenesAdminController);
 
 //Obtener examenes por curso
-router.get("/curso/:id_curso", verificarAutenticacion, verificarRoles(["Admin", "Estudiante"]), examenesController.getExamenesPorCursoController);
+router.get("/curso/:id_curso", verificarAutenticacion, verificarRoles(["Admin", "Estudiante"]), validarIdCursoParam, examenesController.getExamenesPorCursoController);
 
 //Get examen por id
-router.get("/:id_examen", verificarAutenticacion, verificarRoles(["Admin", "Estudiante"]), examenesController.getExamenByIdController);
+router.get("/:id_examen", verificarAutenticacion, verificarRoles(["Admin", "Estudiante"]), validarIdExamen, examenesController.getExamenByIdController);
 
 //Editar examen
-router.put("/editar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.editarExamenController);
+router.put("/editar/:id_examen", verificarAutenticacion, verificarRoles(["Admin"]), validarEditarExamen, examenesController.editarExamenController);
 
 //Eliminar examen
-router.patch("/desactivar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.eliminarExamenController);
+router.patch("/desactivar/:id_examen", verificarAutenticacion, verificarRoles(["Admin"]), validarIdExamen, examenesController.eliminarExamenController);
 
 //Activar examen
-router.patch("/activar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.activarExamenController);
+router.patch("/activar/:id_examen", verificarAutenticacion, verificarRoles(["Admin"]), validarIdExamen, examenesController.activarExamenController);
 
 export default router;
