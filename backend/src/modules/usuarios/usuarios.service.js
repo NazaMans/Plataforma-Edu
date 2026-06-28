@@ -1,15 +1,15 @@
 import * as usuariosRepository from "./usuarios.respository.js";
 
-export const getUsers = async () => {
-    return await usuariosRepository.getUsers();
+export const getUsers = async (filters = {}) => {
+    return await usuariosRepository.getUsers(filters);
 };
 
 export const getUserById = async (id) => {
     return await usuariosRepository.getUserById(id);
 };
 
-export const editUser = async (id_usuario, nombre, apellido, usuario, deuda, fecha_pago, estado, rol, universidad, numero) => {
-    return await usuariosRepository.editUser(id_usuario, nombre, apellido, usuario, deuda, fecha_pago, estado, rol, universidad, numero);
+export const editUser = async (id_usuario, userData) => {
+    return await usuariosRepository.editUser(id_usuario, userData);
 };
 
 export const deleteUser = async (id_usuario) => {

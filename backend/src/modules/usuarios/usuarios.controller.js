@@ -2,7 +2,7 @@ import * as usuariosService from "./usuarios.service.js";
 
 export const getUsers = async (req, res) => {
     try {
-        const users = await usuariosService.getUsers();
+        const users = await usuariosService.getUsers(req.query);
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ message: "Error al obtener usuarios", error: error.message });
