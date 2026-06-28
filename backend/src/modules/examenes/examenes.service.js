@@ -28,3 +28,10 @@ export const editarExamenService = async (id_examen, id_curso, nombre, actividad
 export const eliminarExamenService = async (id_examen) => {
     return examenesRepository.eliminarExamen(id_examen);
 };
+
+//Activar examen
+
+export const activarExamenService = async (id_examen)=> {
+    return examenesRepository.activarExamen(id_examen);
+};
+ 

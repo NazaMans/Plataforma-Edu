@@ -7,7 +7,7 @@ import { verificarRoles } from "../../middlewares/rol.middleware.js";
 const router = Router();
 
 //Crear examen
-router.post("/", verificarAutenticacion, verificarRoles(["Admin"]), examenesController.crearExamenController);
+router.post("/crear", verificarAutenticacion, verificarRoles(["Admin"]), examenesController.crearExamenController);
 
 // Get examen para admin
 router.get("/admin", verificarAutenticacion, verificarRoles(["Admin"]), examenesController.getExamenesAdminController);
@@ -19,9 +19,12 @@ router.get("/curso/:id_curso", verificarAutenticacion, verificarRoles(["Admin", 
 router.get("/:id_examen", verificarAutenticacion, verificarRoles(["Admin", "Estudiante"]), examenesController.getExamenByIdController);
 
 //Editar examen
-router.put("/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.editarExamenController);
+router.put("/editar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.editarExamenController);
 
 //Eliminar examen
-router.delete("/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.eliminarExamenController);
+router.patch("/desactivar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.eliminarExamenController);
+
+//Activar examen
+router.patch("/activar/:id_examen", validarId, verificarAutenticacion, verificarRoles(["Admin"]), examenesController.activarExamenController);
 
 export default router;

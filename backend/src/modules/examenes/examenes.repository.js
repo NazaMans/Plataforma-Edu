@@ -63,3 +63,9 @@ export const eliminarExamen = async (id_examen) => {
     return query.rows[0];
 };
 
+//Activar examen
+
+export const activarExamen = async (id_examen) => {
+    const query = await pool.query("UPDATE examenes SET estado = true WHERE id = $1", [id_examen]);
+    return query.rows[0];
+}

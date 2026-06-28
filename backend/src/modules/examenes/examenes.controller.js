@@ -64,3 +64,16 @@ export const eliminarExamenController = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar el examen", error: error.message });
     }
 };
+
+
+// Activar examen 
+
+export const activarExamenController = async (req, res) => {
+    try {
+        const { id_examen } = req.params;
+        const examen = await examenesService.activarExamenService(id_examen);
+        res.status(200).json({ message: "Examen activado exitosamente", examen });
+    } catch (error) {
+        res.status(500).json({ message: "Error al activar el examen", error: error.message });
+    }
+};
