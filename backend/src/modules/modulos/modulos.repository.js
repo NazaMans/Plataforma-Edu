@@ -11,17 +11,40 @@ export const crearModulo = async (nombre, numero, teoria, practica, id_curso) =>
 //Modificar Modulo 
 
 export const actualizarModulo = async (datos) => {
-    const { id_curso, nombre, numero, teoria, practica } = datos;
+    const { id, id_modulo, id_curso, nombre, numero, teoria, practica } = datos;
+    const targetId = id || id_modulo;
 
-    const query = await pool.query("UPDATE cursos_modulos SET nombre = $2, numero = $3, teoria = $4, practica = $5 WHERE id_curso = $1 RETURNING *", [id_curso, nombre, numero, teoria, practica]);
-    return query.rows[0];
+    if (targetId) {
+        const query = await pool.query(
+            `UPDATE cursos_modulos 
+             SET nombre = COALESCE($2, nombre), 
+                 numero = COALESCE($3, numero), 
+                 teoria = COALESCE($4, teoria), 
+                 practica = COALESCE($5, practica),
+                 id_curso = COALESCE($6, id_curso)
+             WHERE id = $1 RETURNING *`,
+            [targetId, nombre !== undefined ? nombre : null, numero !== undefined ? numero : null, teoria !== undefined ? teoria : null, practica !== undefined ? practica : null, id_curso !== undefined ? id_curso : null]
+        );
+        return query.rows[0];
+    } else {
+        const query = await pool.query(
+            `UPDATE cursos_modulos 
+             SET nombre = COALESCE($2, nombre), 
+                 numero = COALESCE($3, numero), 
+                 teoria = COALESCE($4, teoria), 
+                 practica = COALESCE($5, practica) 
+             WHERE id_curso = $1 RETURNING *`,
+            [id_curso, nombre !== undefined ? nombre : null, numero !== undefined ? numero : null, teoria !== undefined ? teoria : null, practica !== undefined ? practica : null]
+        );
+        return query.rows[0];
+    }
 }
 
 //Obtener modulos por id_curso
 
 export const getModulosByCurso = async (id_curso) => {
-    const query = await pool.query("SELECT nombre, numero FROM cursos_modulos WHERE id_curso = $1", [id_curso]);
-    return query.rows[0];
+    const query = await pool.query("SELECT id, nombre, numero, teoria, practica, id_curso FROM cursos_modulos WHERE id_curso = $1 ORDER BY numero ASC, id ASC", [id_curso]);
+    return query.rows;
 }
 
 //Obtener modulo por id
