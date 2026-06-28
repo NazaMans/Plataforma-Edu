@@ -15,3 +15,4 @@ export const obtenerUserCompare = async (usuario) => {
     );
     return result.rows[0];
 };
+
