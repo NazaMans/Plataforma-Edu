@@ -9,11 +9,11 @@ app.use(cors());
 app.use(express.json());
 passportConfig();
 
-app.use("/api", appRoutes);
-
 app.get("/", (req, res) => {
     res.json({message: "Servidor funcionando"});
 });
+
+app.use("/api", appRoutes);
 
 app.use(errorHandler);
 export default app;
