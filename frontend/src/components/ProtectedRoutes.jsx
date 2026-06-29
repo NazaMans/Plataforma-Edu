@@ -5,12 +5,12 @@ export const ProtectedRoutes = () => {
     const {user, loading} = useAuth();
 
     if (loading) {
-        return <div>Cargando sesion...</div>
-
-        if (!user) {
-            return <Navigate to="/login" replace />
-        }
-
-        return <Outlet />
+        return <div className="flex justify-center items-center min-h-screen">Cargando sesión...</div>;
     }
+
+    if (!user) {
+        return <Navigate to="/login" replace />
+    }
+
+     return <Outlet />
 }
