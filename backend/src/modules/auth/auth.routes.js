@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout } from "./auth.controller.js";
+import { register, login, logout, getSession } from "./auth.controller.js";
 import { validarLogin, validarRegistro } from "./auth.validator.js";
 import { verificarRoles } from "../../middlewares/rol.middleware.js";
 import { verificarAutenticacion } from "../../middlewares/auth.middleware.js";
@@ -11,5 +11,7 @@ router.post("/register", verificarAutenticacion, verificarRoles(["Admin"]), vali
 router.post("/login", validarLogin, login);
 
 router.post("/logout", logout);
+
+router.get("/session", verificarAutenticacion, getSession);
 
 export default router;

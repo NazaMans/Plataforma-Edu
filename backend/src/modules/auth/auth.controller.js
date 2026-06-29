@@ -37,8 +37,18 @@ export const login = async (req, res, next) => {
     }
 };
 
-//TODO:Implementar logout
 export const logout = async (req, res) => {
     res.clearCookie("authToken");
     res.json({succes: true, message: "Sesion cerrada exitosamente"});
+};
+
+export const getSession = async(req, res, next) => {
+    try {
+        res.json({
+            success: true, 
+            usuario: req.user
+        });
+    } catch (error) {
+        next(error);
+    }
 };
