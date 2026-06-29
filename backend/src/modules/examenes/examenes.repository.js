@@ -29,7 +29,9 @@ export const getExamenesPorCurso = async (id_curso) => {
     const query = await pool.query(`
     SELECT 
         e.id,
-        e.nombre
+        e.nombre,
+        e.actividad,
+        e.resolucion
     FROM examenes e
     WHERE e.curso_id = $1 AND e.estado = true
     ORDER BY e.id ASC
