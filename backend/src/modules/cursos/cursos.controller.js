@@ -2,10 +2,14 @@ import * as service from "./cursos.service.js";
 
 //Crear curso
 
-export const generarCurso = async (req, res) => {
-    const {nombre} = req.body;
-    const curso = await service.generarCursoService(nombre);
-    return res.status(201).json({success: true, data: curso});
+export const generarCurso = async (req, res, next) => {
+    try {
+        const {nombre} = req.body;
+        const curso = await service.generarCurso({ nombre });
+        return res.status(201).json({success: true, data: curso});
+    } catch (error) {
+        next(error);
+    }
 }
 
 //Inscribir usuario
@@ -16,12 +20,14 @@ export const inscribirUsuarioACurso = async (req, res) => {
     return res.status(201).json({success: true, data: curso});
 }
 
-//Editar curso
-
-export const editarCurso = async (req, res) => {
-    const {id_curso, nombre, estado} = req.body;
-    const curso = await service.editarCursoService(id_curso, nombre, estado);
-    return res.status(201).json({success: true, data: curso});
+export const editarCurso = async (req, res, next) => {
+    try {
+        const {id_curso, nombre, estado} = req.body;
+        const curso = await service.editarCursoService({ id_curso, nombre, estado });
+        return res.status(201).json({success: true, data: curso});
+    } catch (error) {
+        next(error);
+    }
 }
 
 //Desinscribir usuario a curso
