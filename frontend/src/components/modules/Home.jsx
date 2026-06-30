@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { apiFetch } from "../../services/api.js";
+import { cursosService } from "../../services/cursos/cursos.service.js";
 import { LogOut, BookOpen, ArrowRight, LayoutDashboard, Loader2 } from "lucide-react";
 
 function Home() {
@@ -19,9 +19,9 @@ function Home() {
         setLoading(true);
         let data;
         if (user.rol === "Admin") {
-          data = await apiFetch("/api/cursos/admin");
+          data = await cursosService.getCursosAdmin();
         } else {
-          data = await apiFetch(`/api/cursos/estudiantes/${user.id_usuario}`);
+          data = await cursosService.getCursosParaEstudiantes(user.id_usuario);
         }
         setCursos(data.data || []);
       } catch (err) {

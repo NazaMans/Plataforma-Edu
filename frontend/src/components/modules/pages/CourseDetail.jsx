@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { apiFetch } from "../../../services/api.js";
+import { modulosService } from "../../../services/modulos/modulos.service.js";
+import { examenesService } from "../../../services/examenes/examenes.service.js";
 import { ArrowLeft, Menu, ChevronLeft, BookOpen, FileText, Download, CheckSquare, Loader2 } from "lucide-react";
 
 function CourseDetail() {
@@ -21,8 +22,8 @@ function CourseDetail() {
         setLoading(true);
         // En base a la estructura del backend, obtenemos los módulos y exámenes del curso
         const [modulosRes, examenesRes] = await Promise.all([
-          apiFetch(`/api/modulos/curso/${id}`).catch(() => ({ data: [] })),
-          apiFetch(`/api/examenes/curso/${id}`).catch(() => ({ data: [] }))
+          modulosService.getModulosByCurso(id).catch(() => ({ data: [] })),
+          examenesService.getExamenesPorCurso(id).catch(() => [])
         ]);
 
         const modulosList = modulosRes.data || [];

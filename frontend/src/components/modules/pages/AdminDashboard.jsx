@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext.jsx";
-import { apiFetch } from "../../../services/api.js";
+import { usuariosService } from "../../../services/usuarios/usuarios.service.js";
+import { cursosService } from "../../../services/cursos/cursos.service.js";
+import { modulosService } from "../../../services/modulos/modulos.service.js";
+import { examenesService } from "../../../services/examenes/examenes.service.js";
 import { 
   Users, BookOpen, LogOut, PlusCircle, UserPlus, 
   Trash2, Edit3, X, ChevronRight, Check, AlertCircle, Loader2
@@ -59,8 +62,8 @@ function AdminDashboard() {
     try {
       setLoadingData(true);
       const [usersRes, coursesRes] = await Promise.all([
-        apiFetch("/api/usuarios").catch(() => []),
-        apiFetch("/api/cursos/admin").catch(() => [])
+        usuariosService.getUsers().catch(() => []),
+        cursosService.getCursosAdmin().catch(() => ({ data: [] }))
       ]);
       
       // Filtrar sólo estudiantes en la lista de alumnos
@@ -106,10 +109,7 @@ function AdminDashboard() {
     }
     try {
       // Registrar usuario
-      await apiFetch("/api/auth/register", {
-        method: "POST",
-        body: JSON.stringify(userForm)
-      });
+      await usuariosService.registrarEstudiante(userForm);
       showStatus("success", "Usuario registrado exitosamente.");
       setShowUserModal(false);
       setUserForm({
@@ -138,10 +138,7 @@ function AdminDashboard() {
       return;
     }
     try {
-      await apiFetch("/api/cursos", {
-        method: "POST",
-        body: JSON.stringify(courseForm)
-      });
+      await cursosService.crearCurso(courseForm.nombre);
       showStatus("success", "Curso creado exitosamente.");
       setShowCourseModal(false);
       setCourseForm({ nombre: "" });
@@ -156,9 +153,7 @@ function AdminDashboard() {
   const handleDeleteCourse = async (courseId) => {
     if (!window.confirm("¿Estás seguro de que deseas desactivar/eliminar este curso?")) return;
     try {
-      await apiFetch(`/api/cursos/desactivar/${courseId}`, {
-        method: "DELETE"
-      });
+      await cursosService.eliminarCurso(courseId);
       showStatus("success", "Curso eliminado.");
       fetchData();
     } catch (err) {
@@ -176,26 +171,20 @@ function AdminDashboard() {
     }
     try {
       if (contentForm.type === "modulo") {
-        await apiFetch("/api/modulos", {
-          method: "POST",
-          body: JSON.stringify({
-            nombre: contentForm.nombre,
-            numero: parseInt(contentForm.numero, 10) || 1,
-            teoria: contentForm.teoria,
-            practica: contentForm.practica,
-            id_curso: selectedCourse.id
-          })
+        await modulosService.crearModulo({
+          nombre: contentForm.nombre,
+          numero: parseInt(contentForm.numero, 10) || 1,
+          teoria: contentForm.teoria,
+          practica: contentForm.practica,
+          id_curso: selectedCourse.id
         });
         showStatus("success", "Módulo agregado al curso.");
       } else {
-        await apiFetch("/api/examenes/crear", {
-          method: "POST",
-          body: JSON.stringify({
-            curso_id: selectedCourse.id,
-            nombre: contentForm.nombre,
-            actividad: contentForm.actividad,
-            resolucion: contentForm.resolucion
-          })
+        await examenesService.crearExamen({
+          curso_id: selectedCourse.id,
+          nombre: contentForm.nombre,
+          actividad: contentForm.actividad,
+          resolucion: contentForm.resolucion
         });
         showStatus("success", "Examen agregado al curso.");
       }

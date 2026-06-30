@@ -1,6 +1,5 @@
-import { createContext, useContext, useState, useEffect, Children } from "react";
-
-import { apiFetch } from "../services/api.js";
+import { createContext, useContext, useState, useEffect } from "react";
+import { authService } from "../services/auth/auth.service.js";
 
 const AuthContext = createContext(null);
 
@@ -14,8 +13,7 @@ export const AuthProvider = ({children}) => {
 
 const checkAuthStatus = async () => {
     try {
-        const data = await apiFetch("/api/auth/session");
-
+        const data = await authService.getSession();
         setUser(data.usuario);
     } catch (error) {
         setUser(null);
@@ -25,18 +23,14 @@ const checkAuthStatus = async () => {
 }
 
 const login = async (credenciales) => {
-    const data = await apiFetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(credenciales),
-    });
+    const data = await authService.login(credenciales);
     setUser(data.usuario);
     return data;
 }
 
 const logout = async () => {
     try {
-        await apiFetch("/api/auth/logout",{
-            method: "POST"});
+        await authService.logout();
     } finally {
         setUser(null);
         setLoading(false);
