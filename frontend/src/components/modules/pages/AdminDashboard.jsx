@@ -123,9 +123,10 @@ function AdminDashboard() {
     <div className="min-h-screen bg-brand-dark text-white font-sans flex flex-col">
       {/* Header */}
       <header className="w-full bg-surf-lowest border-b border-surf-high px-6 py-4 flex items-center justify-between z-20">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <img src="/iconoIA.png" alt="Mansillas Logo" className="w-8 h-8 rounded-lg border border-surf-high" />
           <h1 className="text-2xl font-bold tracking-tight text-brand-light">Mansillas</h1>
-          <span className="text-xs py-1 px-2.5 bg-accent-darkblue/40 border border-accent-blue/30 text-accent-blue rounded font-bold uppercase tracking-wider">
+          <span className="text-xs py-1 px-2.5 bg-accent-darkblue/40 border border-accent-blue/30 text-accent-blue rounded font-bold uppercase tracking-wider ml-1">
             Administrador
           </span>
         </div>

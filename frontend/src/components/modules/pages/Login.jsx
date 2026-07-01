@@ -57,7 +57,8 @@ function Login() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent-darkblue/5 blur-[120px] pointer-events-none"></div>
 
       <div className="w-full max-w-md bg-surf-lowest border border-surf-high rounded-2xl p-8 shadow-xl relative z-10">
-        <div className="mb-8 text-center">
+        <div className="mb-8 flex flex-col items-center">
+          <img src="/iconoIA.png" alt="Mansillas Logo" className="w-16 h-16 mb-4 rounded-xl shadow-lg border border-surf-high" />
           <h1 className="text-3xl font-extrabold text-brand-light tracking-tight">
             Mansillas
           </h1>

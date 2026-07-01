@@ -52,7 +52,10 @@ function Home() {
     <div className="min-h-screen bg-brand-dark text-white font-sans flex flex-col">
       {/* Navigation Header */}
       <header className="w-full bg-surf-lowest border-b border-surf-high px-6 py-4 flex items-center justify-between z-10">
-        <h1 className="text-2xl font-bold tracking-tight text-brand-light">Mansillas</h1>
+        <div className="flex items-center gap-3">
+          <img src="/iconoIA.png" alt="Mansillas Logo" className="w-8 h-8 rounded-lg border border-surf-high" />
+          <h1 className="text-2xl font-bold tracking-tight text-brand-light">Mansillas</h1>
+        </div>
         <div className="flex items-center gap-4">
           {isAdmin && (
             <Link
