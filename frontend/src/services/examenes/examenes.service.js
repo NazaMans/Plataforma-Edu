@@ -18,5 +18,24 @@ export const examenesService = {
 
   getExamenesAdmin: async () => {
     return apiFetch("/api/examenes/admin");
+  },
+
+  editarExamen: async (id, datos) => {
+    return apiFetch(`/api/examenes/editar/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(datos),
+    });
+  },
+
+  desactivarExamen: async (id) => {
+    return apiFetch(`/api/examenes/desactivar/${id}`, {
+      method: "PATCH",
+    });
+  },
+
+  activarExamen: async (id) => {
+    return apiFetch(`/api/examenes/activar/${id}`, {
+      method: "PATCH",
+    });
   }
 };
