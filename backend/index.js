@@ -10,3 +10,5 @@ app.listen(PORT, async () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
     await testConection();
 });
+
+export default app;
