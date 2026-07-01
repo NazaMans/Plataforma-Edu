@@ -1,4 +1,4 @@
-import { crearCurso,inscribirUsuarioACurso, editarCurso, desinscribirUsuarioACurso, getCursosParaEstudiantes, getCursosAdmin, getCursoByName, getCursoEditByName } from "./cursos.repisitory.js";
+import { crearCurso,inscribirUsuarioACurso, editarCurso, desinscribirUsuarioACurso, getCursosParaEstudiantes, getCursosAdmin, getCursoByName, getCursoEditByName, eliminarCurso } from "./cursos.repisitory.js";
 
 //Crear curso
 
