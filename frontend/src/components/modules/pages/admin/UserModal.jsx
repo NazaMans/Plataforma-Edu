@@ -107,7 +107,6 @@ function UserModal({ isOpen, onClose, onSuccess, onError }) {
               Contraseña Temporal *
             </label>
             <input
-              type="password"
               required
               value={userForm.password}
               onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
